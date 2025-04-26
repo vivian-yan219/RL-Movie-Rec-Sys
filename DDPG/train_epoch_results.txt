@@ -1,0 +1,43 @@
+----training 1----
+recommended items : 363,  epsilon : 0.999, reward : -0.5
+0/10, precision :  0%, total_reward:-181.5, q_loss : 0.03543131798505783, mean_action : -0.09261236076184214
+recommended items : 41,  epsilon : 0.999, reward : -0.5
+1/10, precision :  0%, total_reward:-20.5, q_loss : 0.004387580323964357, mean_action : -0.09497579150083588
+recommended items : 60,  epsilon : 0.999, reward : -0.5
+2/10, precision :  0%, total_reward:-30.0, q_loss : 0.024671416729688644, mean_action : -0.08286824488639827
+recommended items : 348,  epsilon : 0.999, reward : -0.5
+3/10, precision :  0%, total_reward:-174.0, q_loss : 0.008167441934347153, mean_action : -0.016009331958304167
+recommended items : 55,  epsilon : 0.998, reward : -0.5
+4/10, precision :  0%, total_reward:-27.5, q_loss : 0.0035198559053242207, mean_action : 0.15055691523985426
+recommended items : 624,  epsilon : 0.997, reward : -0.5
+5/10, precision :  0%, total_reward:-312.0, q_loss : 0.003427988849580288, mean_action : -0.08253324942902121
+recommended items : 261,  epsilon : 0.997, reward : -0.5
+6/10, precision :  0%, total_reward:-130.5, q_loss : 0.0057738465256989, mean_action : -0.06215874343311188
+recommended items : 756,  epsilon : 0.995, reward : -0.5
+7/10, precision :  0%, total_reward:-378.0, q_loss : 0.004064858425408602, mean_action : -0.05469116726013088
+recommended items : 48,  epsilon : 0.995, reward : -0.5
+8/10, precision :  0%, total_reward:-24.0, q_loss : 0.009149652905762196, mean_action : 0.11926078150669735
+recommended items : 52,  epsilon : 0.995, reward : -0.5
+9/10, precision :  0%, total_reward:-26.0, q_loss : 0.002547432202845812, mean_action : 0.0784760428850467
+
+----training 2----
+recommended items : 75,  epsilon : 1.000, reward : -0.5
+0/10, precision :  0%, total_reward:-37.5, q_loss : 0.10408969968557358, mean_action : 0.04189087844292323
+recommended items : 711,  epsilon : 0.999, reward : -0.5
+1/10, precision :  0%, total_reward:-355.5, q_loss : 0.005572235677391291, mean_action : 0.07373943724754656
+recommended items : 58,  epsilon : 0.998, reward : -0.5
+2/10, precision :  0%, total_reward:-29.0, q_loss : 0.0037936135195195675, mean_action : -0.05424240346612603
+recommended items : 122,  epsilon : 0.998, reward : -0.5
+3/10, precision :  0%, total_reward:-61.0, q_loss : 0.003637453308328986, mean_action : 0.12675234391552503
+recommended items : 171,  epsilon : 0.998, reward : -0.5
+4/10, precision :  0%, total_reward:-85.5, q_loss : 0.01856108009815216, mean_action : 0.039581499212143725
+recommended items : 82,  epsilon : 0.998, reward : -0.5
+5/10, precision :  0%, total_reward:-41.0, q_loss : 0.011292587034404278, mean_action : 0.09792821190706118
+recommended items : 364,  epsilon : 0.997, reward : -0.5
+6/10, precision :  0%, total_reward:-182.0, q_loss : 0.003661873983219266, mean_action : 0.11307739361875005
+recommended items : 29,  epsilon : 0.997, reward : -0.5
+7/10, precision :  0%, total_reward:-14.5, q_loss : 0.023656554520130157, mean_action : 0.08870151096376881
+recommended items : 37,  epsilon : 0.997, reward : -0.5
+8/10, precision :  0%, total_reward:-18.5, q_loss : 0.004365105647593737, mean_action : 0.12449661201721911
+recommended items : 82,  epsilon : 0.997, reward : -0.5
+9/10, precision :  0%, total_reward:-41.0, q_loss : 0.01197301596403122, mean_action : 0.12543956074772816
