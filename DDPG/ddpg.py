@@ -19,6 +19,7 @@ class DDPGAgent:
     def __init__(self, env, users_num, items_num, state_size, is_test=False, use_wandb=False):
         
         self.env = env
+        self.valid_movie_ids = np.array(sorted([int(mid) for mid in self.env.items_id_to_name.keys()]))
 
         self.users_num = users_num
         self.items_num = items_num
@@ -37,20 +38,25 @@ class DDPGAgent:
         self.actor = Actor(self.embedding_dim, self.actor_hidden_dim, self.actor_learning_rate, state_size, self.tau)
         self.critic = Critic(self.critic_hidden_dim, self.critic_learning_rate, self.embedding_dim, self.tau)
 
+        # self.embedding_network = UserMovieEmbedding(users_num, items_num, self.embedding_dim)
+        # self.embedding_network([np.zeros((1,), dtype=np.int32), np.zeros((1,100), dtype=np.int32)])
+        # self.embedding_network.load_weights('save_weights/u_m_model_weights.h5')
+
         self.embedding_network = UserMovieEmbedding(users_num, items_num, self.embedding_dim)
         self.embedding_network([np.zeros((1,)),np.zeros((1,100))])
-        
-        self.save_model_weight_dir = f"save_model/trail-{datetime.now().strftime('%Y-%m-%d-%H')}"
-        if not os.path.exists(self.save_model_weight_dir):
-            os.makedirs(os.path.join(self.save_model_weight_dir, 'images'))
-        embedding_save_file_dir = 'save_weights/u_m_model_weights.weights.h5'
+        embedding_save_file_dir = 'save_weights/u_m_model_weights.h5'
         assert os.path.exists(embedding_save_file_dir), f"embedding save file directory: '{embedding_save_file_dir}' is wrong."
         self.embedding_network.load_weights(embedding_save_file_dir)
 
+        self.save_model_weight_dir = f"save_model/trail-{datetime.now().strftime('%Y-%m-%d-%H')}"
+        if not os.path.exists(self.save_model_weight_dir):
+            os.makedirs(os.path.join(self.save_model_weight_dir, 'images'))
+
         self.srm_ave = DRRAveStateRepresentation(self.embedding_dim)
+        # self.srm_ave([tf.zeros((1, 100), dtype=tf.float32), tf.zeros((1, state_size, 100), dtype=tf.float32)])
         self.srm_ave([np.zeros((1, 100,)),np.zeros((1,state_size, 100))])
 
-        # PER
+        # priority experience replay
         self.buffer = PriorityExperienceReplay(self.replay_memory_size, self.embedding_dim)
         self.epsilon_for_priority = 1e-6
 
@@ -86,13 +92,14 @@ class DDPGAgent:
             y_t[i] = rewards[i] + (1 - dones[i])*(self.discount_factor * q_values[i])
         return y_t
 
+    
     def recommend_item(self, action, recommended_items, top_k=False, items_ids=None):
-        if items_ids == None:
-            items_ids = np.array(list(set(i for i in range(self.items_num)) - recommended_items))
+        if items_ids is None:
+            items_ids = np.array(list(set(self.valid_movie_ids) - recommended_items))
 
         items_ebs = self.embedding_network.get_layer('movie_embedding')(items_ids)
-        # items_ebs = self.m_embedding_network.get_layer('movie_embedding')(items_ids)
         action = tf.transpose(action, perm=(1,0))
+
         if top_k:
             item_indice = np.argsort(tf.transpose(tf.keras.backend.dot(items_ebs, action), perm=(1,0)))[0][-top_k:]
             return items_ids[item_indice]
@@ -104,9 +111,9 @@ class DDPGAgent:
         self.actor.update_target_network()
         self.critic.update_target_network()
 
-        if load_model:
-            self.load_model("/home/diominor/Workspace/DRR/save_weights/actor_50000.h5", "/home/diominor/Workspace/DRR/save_weights/critic_50000.h5")
-            print('Completely load weights!')
+        # if load_model:
+        #     self.load_model("/home/diominor/Workspace/DRR/save_weights/actor_50000.h5", "/home/diominor/Workspace/DRR/save_weights/critic_50000.h5")
+        #     print('Completely load weights!')
 
         episodic_precision_history = []
 
@@ -137,7 +144,8 @@ class DDPGAgent:
                 if top_k:
                     reward = np.sum(reward)
 
-                next_items_eb = self.embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
+                next_items_eb = self.embedding_network.get_layer('embedding_1')(np.array(next_items_ids))
+                # next_items_eb = self.embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
                 # next_items_eb = self.m_embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
                 next_state = self.srm_ave([np.expand_dims(user_eb, axis=0), np.expand_dims(next_items_eb, axis=0)])
 
