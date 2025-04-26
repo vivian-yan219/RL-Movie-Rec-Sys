@@ -36,19 +36,14 @@ class DDPGAgent:
         
         self.actor = Actor(self.embedding_dim, self.actor_hidden_dim, self.actor_learning_rate, state_size, self.tau)
         self.critic = Critic(self.critic_hidden_dim, self.critic_learning_rate, self.embedding_dim, self.tau)
-        
-        # self.m_embedding_network = MovieGenreEmbedding(items_num, 19, self.embedding_dim)
-        # self.m_embedding_network([np.zeros((1,)),np.zeros((1,))])
-        # self.m_embedding_network.load_weights('/home/diominor/Workspace/DRR/save_weights/m_g_model_weights.h5')
 
         self.embedding_network = UserMovieEmbedding(users_num, items_num, self.embedding_dim)
-        self.embedding_network([np.zeros((1,)),np.zeros((1,))])
-        # self.embedding_network = UserMovieEmbedding(users_num, self.embedding_dim)
-        # self.embedding_network([np.zeros((1)),np.zeros((1,100))])
-        self.save_model_weight_dir = f"/Users/vivianyan/Desktop/Reinforcement-Learning/Project/RL-Movie-Rec-Sys/DDPG/save_model/trail-{datetime.now().strftime('%Y-%m-%d-%H')}"
+        self.embedding_network([np.zeros((1,)),np.zeros((1,100))])
+        
+        self.save_model_weight_dir = f"save_model/trail-{datetime.now().strftime('%Y-%m-%d-%H')}"
         if not os.path.exists(self.save_model_weight_dir):
             os.makedirs(os.path.join(self.save_model_weight_dir, 'images'))
-        embedding_save_file_dir = '/Users/vivianyan/Desktop/Reinforcement-Learning/Project/RL-Movie-Rec-Sys/DDPG/save_weights/u_m_model_weights.weights.h5'
+        embedding_save_file_dir = 'save_weights/u_m_model_weights.weights.h5'
         assert os.path.exists(embedding_save_file_dir), f"embedding save file directory: '{embedding_save_file_dir}' is wrong."
         self.embedding_network.load_weights(embedding_save_file_dir)
 
