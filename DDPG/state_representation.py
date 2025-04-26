@@ -10,10 +10,17 @@ class DRRAveStateRepresentation(tf.keras.Model):
         self.flatten = tf.keras.layers.Flatten()
         
     def call(self, x):
-        items_eb = tf.transpose(x[1], perm=(0,2,1))/self.embedding_dim
+        user_eb, items_eb = x  # unpack for readability
+        
+        if tf.shape(items_eb)[1] == 0:  # if no items
+            # fallback: return a zero vector or just user embedding flattened
+            fallback = self.flatten(self.concat([user_eb, user_eb, user_eb]))
+            return fallback
+
+        items_eb = tf.transpose(items_eb, perm=(0, 2, 1)) / self.embedding_dim
         wav = self.wav(items_eb)
-        wav = tf.transpose(wav, perm=(0,2,1))
+        wav = tf.transpose(wav, perm=(0, 2, 1))
         wav = tf.squeeze(wav, axis=1)
-        user_wav = tf.keras.layers.multiply([x[0], wav])
-        concat = self.concat([x[0], user_wav, wav])
+        user_wav = tf.keras.layers.multiply([user_eb, wav])
+        concat = self.concat([user_eb, user_wav, wav])
         return self.flatten(concat)
