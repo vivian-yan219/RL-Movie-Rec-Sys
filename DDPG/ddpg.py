@@ -117,50 +117,35 @@ class DDPGAgent:
             steps = 0
             q_loss = 0
             mean_action = 0
-            # environment
+
             user_id, items_ids, done = self.env.reset()
-            # print(f'user_id : {user_id}, rated_items_length:{len(self.env.user_items)}')
-            # print('items : ', self.env.get_items_names(items_ids))
             while not done:
-                
-                # Observe current state & Find action
-                ## Embedding
                 user_eb = self.embedding_network.get_layer('user_embedding')(np.array(user_id))
                 items_eb = self.embedding_network.get_layer('movie_embedding')(np.array(items_ids))
-                # items_eb = self.m_embedding_network.get_layer('movie_embedding')(np.array(items_ids))
-                ## State
+                
                 state = self.srm_ave([np.expand_dims(user_eb, axis=0), np.expand_dims(items_eb, axis=0)])
 
-                ## Action(ranking score)
                 action = self.actor.network(state)
 
-                ## ε-greedy exploration
                 if self.epsilon > np.random.uniform() and not self.is_test:
                     self.epsilon -= self.epsilon_decay
                     action += np.random.normal(0,self.std,size=action.shape)
 
-                ## Item 
                 recommended_item = self.recommend_item(action, self.env.recommended_items, top_k=top_k)
                 
-                # Calculate reward & observe new state (in env)
-                ## Step
                 next_items_ids, reward, done, _ = self.env.step(recommended_item, top_k=top_k)
                 if top_k:
                     reward = np.sum(reward)
 
-                # get next_state
                 next_items_eb = self.embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
                 # next_items_eb = self.m_embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
                 next_state = self.srm_ave([np.expand_dims(user_eb, axis=0), np.expand_dims(next_items_eb, axis=0)])
 
-                # buffer
                 self.buffer.append(state, action, reward, next_state, done)
                 
                 if self.buffer.crt_idx > 1 or self.buffer.is_full:
-                    # Sample a minibatch
                     batch_states, batch_actions, batch_rewards, batch_next_states, batch_dones, weight_batch, index_batch = self.buffer.sample(self.batch_size)
 
-                    # Set TD targets
                     target_next_action= self.actor.target_network(batch_next_states)
                     qs = self.critic.network([target_next_action, batch_next_states])
                     target_qs = self.critic.target_network([target_next_action, batch_next_states])
@@ -171,9 +156,6 @@ class DDPGAgent:
                     for (p, i) in zip(td_targets, index_batch):
                         self.buffer.update_priority(abs(p[0]) + self.epsilon_for_priority, i)
 
-                    # print(weight_batch.shape)
-                    # print(td_targets.shape)
-                    # raise Exception
                     # Update critic network
                     q_loss += self.critic.train([batch_actions, batch_states], td_targets, weight_batch)
                     
@@ -206,8 +188,8 @@ class DDPGAgent:
                 plt.savefig(os.path.join(self.save_model_weight_dir, f'images/training_precision_%_top_5.png'))
 
             if (episode+1)%1000 == 0 or episode == max_episode_num-1:
-                self.save_model(os.path.join(self.save_model_weight_dir, f'actor_{episode+1}_fixed.h5'),
-                                os.path.join(self.save_model_weight_dir, f'critic_{episode+1}_fixed.h5'))
+                self.save_model(os.path.join(self.save_model_weight_dir, f'actor_{episode+1}_fixed.weights.h5'),
+                                os.path.join(self.save_model_weight_dir, f'critic_{episode+1}_fixed.weights.h5'))
 
     def save_model(self, actor_path, critic_path):
         self.actor.save_weights(actor_path)
