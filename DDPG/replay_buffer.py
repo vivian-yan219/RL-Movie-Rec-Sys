@@ -24,7 +24,7 @@ class PriorityExperienceReplay(object):
         self.actions = np.zeros((buffer_size, embedding_dim), dtype=np.float32)
         self.rewards = np.zeros((buffer_size), dtype=np.float32)
         self.next_states = np.zeros((buffer_size, 3*embedding_dim), dtype=np.float32)
-        self.dones = np.zeros(buffer_size, np.bool)
+        self.dones = np.zeros(buffer_size, np.bool_)
 
         self.sum_tree = SumTree(buffer_size)
         self.min_tree = MinTree(buffer_size)
