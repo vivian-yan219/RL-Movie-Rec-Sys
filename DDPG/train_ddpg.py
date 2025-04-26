@@ -58,7 +58,7 @@ if __name__ == "__main__":
     # Training
     env = OfflineEnv(train_users_dict, train_users_history_lens, movies_id_to_movies, STATE_SIZE)
     
-    ddpg = DDPGAgent(env, users_num, items_num, STATE_SIZE, use_wandb=False)
+    ddpg = DDPGAgent(env, users_num, movies_num, STATE_SIZE, use_wandb=False)
     ddpg.actor.build_networks()
     ddpg.critic.build_networks()
     ddpg.train(MAX_EPISODE_NUM, load_model=False)
