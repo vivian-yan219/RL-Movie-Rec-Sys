@@ -7,15 +7,14 @@ The objective of this project is to explore the application of RL in personalize
 ## Methodology
 
 ### Bandit
-**Bandit**
 
-**DDPG**
+### DDPG
 
 We built a DDPG agent from scratch, using the actor and critic network with pretrained embeddings, reducing overestimated Q-values, and applying priorized experience replay (PER).
 
 The saved model of actor and critic are generated after the training is done: `python train.py`. During evaluation, we experimented with the saved actor and critic models and recommended related movies with respect to user's watch history.
 
-**Proximal Policy Optimization (PPO)**
+### Proximal Policy Optimization (PPO)
 - **Type**: On-policy, policy-gradient, actor-critic
 - **Key ideas**:  
   - Use a clipped surrogate objective to constrain policy updates  
@@ -34,7 +33,22 @@ The saved model of actor and critic are generated after the training is done: `p
 | Total timesteps | 200 000   |
 
 **Environment ('MovieRecRnv')**
+Each episode is a sequence of movie recommendations up to 'max_steps':
 
+- **Observation vector** (dimension ≈ `1 + 1 + num_genres + 7 + num_occupations + 2`):  
+  1. Normalized user mean rating  
+  2. Normalized movie mean rating  
+  3. One-hot genre vector  
+  4. Age bucket (7-dim one-hot)  
+  5. Occupation one-hot  
+  6. Gender one-hot (M/F)
+ 
+- **Action space**: Discrete set of all `movie_id`s in the catalog  
+- **Reward**:  
+  - +1.0 for exact rating match  
+  - –|predicted_rating – true_rating| otherwise
+ 
+- **Episode termination**: after `max_steps` recommendations or exhaust the dataset
 
 ## Results
 ||Precision@10|Recall@10|NDCG@10|MAP@10|
