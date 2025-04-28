@@ -8,6 +8,8 @@ The objective of this project is to explore the application of RL in personalize
 
 ### Bandit
 
+-----
+
 ### DQN
 
 **Type**: off-policy, value function approximator
@@ -23,6 +25,8 @@ The objective of this project is to explore the application of RL in personalize
     - Configuration: apply a standard replay buffer with 50,000 experiences, epsilon greedy exploration with linear decay.
     - Compilation: use double DQN to avoid overestimating Q-values with Adam and mean absolute error.
   - Training, evaluations using top k ranking metrics, and improvements by modifying model structure, exploration policy, and optimizer.
+  - 
+-----
 
 ### DDPG
 
@@ -56,6 +60,8 @@ The objective of this project is to explore the application of RL in personalize
     | Initial exploration noise std dev| 1.5|
 
 - **Actor_Critic**:
+
+-----
 
 ### Proximal Policy Optimization (PPO)
 **Type**: on-policy, policy-gradient, actor-critic
