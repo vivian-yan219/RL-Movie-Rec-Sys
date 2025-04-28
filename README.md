@@ -28,7 +28,7 @@ The objective of this project is to explore the application of RL in personalize
 
 **Type**: off-policy, model-free, actor-critic
 
-We performed two different experiments regarding the DDPG agent, which can be found under the folders DDPG and Actor_Critic respectively.
+**Key ideas**: We performed two different experiments regarding the DDPG agent, which can be found under the folders DDPG and Actor_Critic respectively.
 - **DDPG**: We built a DDPG agent from scratch, using the actor and critic network with pretrained embeddings, reducing overestimated Q-values, and applying priorized experience replay (PER). The saved model of actor and critic are generated after training is done: `python train.py`. During evaluation, we experimented with the saved models and recommended related movies with respect to user's watch history.
   - Key RL components initialization:
     - `env.py`: an offline interface to interact with users and movie recommendations.
