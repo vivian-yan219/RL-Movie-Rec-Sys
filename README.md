@@ -64,7 +64,9 @@ The objective of this project is to explore the application of RL in personalize
 -----
 
 ### Proximal Policy Optimization (PPO)
+
 **Type**: on-policy, policy-gradient, actor-critic
+
 **Key ideas**:  
 - Use a clipped surrogate objective to constrain policy updates  
 - Maintain a value function baseline for variance reduction  
@@ -98,6 +100,11 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
   - –|predicted_rating – true_rating| otherwise
  
 - **Episode termination**: after `max_steps` recommendations or exhaust the dataset
+
+**File Structure & Setup Guide**
+
+- 'utils/data_loader.py':
+    - Reads and cleans the MovieLens dataset, renames columns, one-hot encode genres, and returns DataFrames ready for the environment.
 
 ## Results
 ||Precision@10|Recall@10|NDCG@10|MAP@10|
