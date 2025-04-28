@@ -59,7 +59,21 @@ The objective of this project is to explore the application of RL in personalize
     | Target network soft update | 0.001  |
     | Initial exploration noise std dev| 1.5|
 
-- **Actor_Critic**:
+- **Approach 2: Actor_Critic**: The second approach can be found in the folder Actor_Critic. The Jupyter Notebook implements an actor-critic deep reinforcement learning approach (DDPG) for personalized movie recommendations using the MovieLens 100K dataset. 
+  - In this notebook, we model the recommendation problem as a Markov Decision Process (MDP) and apply the Deep Deterministic Policy Gradient (DDPG) algorithm. The workflow includes:
+    - Generating embeddings for movie items via a neural network classifier.
+    - Defining an environment simulator for user–movie interactions.
+    - Implementing an actor network that proposes recommendation actions based on user history.
+    - Implementing a critic network that evaluates the quality of actions (Q-values).
+    - Training with experience replay to stabilize learning.
+    - Evaluating recommendation performance on a held-out test set.
+  - Hyperparameters
+    - history_length: length of user history sequence (20)
+    - ra_length: number of items recommended per step (10)
+    - buffer_size: size of replay memory (1000000)
+    - batch_size: mini-batch size for learning (128)
+    - discount_factor: reward discount factor γ (0.99)
+    - nb_episodes: number of training episodes (5)
 
 -----
 
