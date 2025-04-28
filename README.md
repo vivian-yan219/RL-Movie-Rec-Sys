@@ -58,11 +58,11 @@ The objective of this project is to explore the application of RL in personalize
 - **Actor_Critic**:
 
 ### Proximal Policy Optimization (PPO)
-- **Type**: on-policy, policy-gradient, actor-critic
-- **Key ideas**:  
-  - Use a clipped surrogate objective to constrain policy updates  
-  - Maintain a value function baseline for variance reduction  
-  - Alternate between collecting rollouts and performing multiple epochs of minibatch SGD
+**Type**: on-policy, policy-gradient, actor-critic
+**Key ideas**:  
+- Use a clipped surrogate objective to constrain policy updates  
+- Maintain a value function baseline for variance reduction  
+- Alternate between collecting rollouts and performing multiple epochs of minibatch SGD
  
 **Hyperparameters** (example)  
 | Parameter       | Value     |
