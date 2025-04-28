@@ -104,18 +104,18 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
 **File Structure & Setup Guide**
 
 - `utils/data_loader.py`:
-  - Reads and cleans the MovieLens dataset, renames columns, one-hot encodes genres, and returns DataFrames ready for the environment.
+  - Reads and cleans the MovieLens dataset, renames columns, one-hot encodes genres, and returns DataFrames ready for the environment
 - `env/movie_rec_env.py` defines MovieRecEnv, which is a Gymnasium environment that:
   - Builds per-step feature vectors from user/movie metadata
   - Exposes a discrete action space (predict a rating 1 - 5)
   - Implements a reward function
   - Terminates episodes after a fixed number of steps or dataset exhaustion
 - `train/ppo_train.py`:
-  - Loads data via `data_loader.py`, creates a vectorized and normalized environment (`DummyVecEnv` + `VecNOrmalize`), instantiates a PPO agent with tuned hyperparameters, runs training for a specified number of timesteps, and saves both the model weights and normalization statistics under `models/`.
+  - Loads data via `data_loader.py`, creates a vectorized and normalized environment (`DummyVecEnv` + `VecNOrmalize`), instantiates a PPO agent with tuned hyperparameters, runs training for a specified number of timesteps, and saves both the model weights and normalization statistics under `models/`
 - `train/evaluate.py` loads the saved PPO policy and VecNormalize stats, reconstructs the environment, then:
-  - Runs episodes to report average cumulative reward
+  - Runs episodes to report the average cumulative reward
   - Splits out a test portion of the ratings
-  - Scores every candidate movie per user to compute ranking metrics -- Precision@K, Recall@K, NDCG@K, and Mean Average Precision@K
+  - Scores every candidate movie per user to compute ranking metrics: Precision@K, Recall@K, NDCG@K, and Mean Average Precision@K
 - `main.py` ties everything together depending on ``--mode``:
   - `--mode=train` invoke `train/ppo_train.py` with chosen `--timesteps` and `--max_steps`
   - `--mode=eval` invoke `train/evaluate.py` with chosen `--episodes` and `--max_steps`, and ranking cutoff `K`, then print out all metrics
