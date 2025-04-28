@@ -42,9 +42,10 @@ if __name__ == "__main__":
 
     # Training preparation
     movies_id_to_movies = {movie[0]: movie[1:] for movie in movies_list[1:]}
-    users_dict = np.load(os.path.join(os.getcwd(), "data/user_dict.npy"), allow_pickle=True)
-    users_history_lens = np.load(os.path.join(os.getcwd(), "data/users_histroy_len.npy"))
 
+    users_dict = {user: [] for user in set(ratings_df["userId"])}
+    users_history_lens = np.load('/Users/vivianyan/Desktop/Reinforcement-Learning/Project/RL-Movie-Rec-Sys/DDPG/data/users_histroy_len.npy')
+    
     users_num = max(ratings_df['userId']) + 1
     movies_num = max(ratings_df['movieId']) + 1
     train_users_num = int(users_num * 0.8)
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     # Training
     env = OfflineEnv(train_users_dict, train_users_history_lens, movies_id_to_movies, STATE_SIZE)
     
-    ddpg = DDPGAgent(env, users_num, items_num, STATE_SIZE, use_wandb=False)
+    ddpg = DDPGAgent(env, users_num, movies_num, STATE_SIZE, use_wandb=False)
     ddpg.actor.build_networks()
     ddpg.critic.build_networks()
     ddpg.train(MAX_EPISODE_NUM, load_model=False)

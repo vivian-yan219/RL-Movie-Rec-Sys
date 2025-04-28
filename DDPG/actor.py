@@ -4,7 +4,6 @@ import numpy as np
 class ActorNetwork(tf.keras.Model):
     def __init__(self, embedding_dim, hidden_dim):
         super(ActorNetwork, self).__init__()
-        self.inputs = tf.keras.layers.InputLayer(name='input_layer', input_shape=(3*embedding_dim,))
         self.fc = tf.keras.Sequential([
             tf.keras.layers.Dense(hidden_dim, activation='relu'),
             tf.keras.layers.Dense(hidden_dim, activation='relu'),
@@ -12,7 +11,6 @@ class ActorNetwork(tf.keras.Model):
         ])
         
     def call(self, x):
-        x = self.inputs(x)
         return self.fc(x)
 
 class Actor(object):

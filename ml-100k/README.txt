@@ -113,7 +113,7 @@ Genres are a pipe-separated list, and are selected from the following:
 * Action
 * Adventure
 * Animation
-* Children's
+* Children
 * Comedy
 * Crime
 * Documentary
@@ -129,6 +129,7 @@ Genres are a pipe-separated list, and are selected from the following:
 * War
 * Western
 * (no genres listed)
+* IMAX
 
 
 Links Data File Structure (links.csv)
