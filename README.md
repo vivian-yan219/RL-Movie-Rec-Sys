@@ -99,5 +99,6 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
 |Bandit|||||
 |DQN|0.0300|0.0054|0.0660|0.3000|
 |DDPG|0.0102|0.0016|0.0132|0.0451|
+|Actor Critic|0.0693|0.0182|0.0759|0.0094
 |PPO|0.1839|0.1332|0.1893|0.0465|
 |..|||||
