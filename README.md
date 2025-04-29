@@ -71,13 +71,11 @@ The objective of this project is to explore the application of RL in personalize
 **Hyperparameters** (example)  
 | Parameter       | Value     |
 |-----------------|-----------|
-| Learning rate   | 1e-4      |
-| Discount factor | 0.98      |
-| Clip range      | 0.1       |
-| Entropy :    | 0.01      |
-| n_steps         | 256       |
-| Batch size      | 128       |
-| Total timesteps | 200 000   |
+| User embedding dimension   | 16      |
+| Reward network hidden sizes | 256 → 128      |
+| Epsilon decay schedule      | 0.3 → 0.1 → 0.05 → 0.01       |
+| Steps per episode    | 5      |
+| Total training steps         | 50,000       |
 
 
 -----
