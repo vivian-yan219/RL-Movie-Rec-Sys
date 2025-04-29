@@ -6,7 +6,56 @@ The objective of this project is to explore the application of RL in personalize
 
 ## Methodology
 
-### Bandit
+
+# RL-Movie-Rec-Sys
+DS-GA 3001 Reinforcement Learning Project Spring 2025
+
+## Introduction
+The objective of this project is to explore the application of RL in personalized recommendation systems. In this GitHub, we developed a custom RL environment based on the Movielens-100k dataset that simulates realistic user interactions. Building on this environment, we implemented and experiment with four different reinforcement learning algorithms, including bandits, DQN, and actor-critic methods. The performance of these models is then systematically evaluated using offline metrics, such as precision, recall, ndcg, and MAP.
+
+## Methodology
+
+### Contextual MAB
+
+**Type**: off-policy, contextual bandit, value-function based
+
+**Key ideas**:  
+- Implement a Contextual Multi-Armed Bandit (MAB) agent using a neural reward prediction network and epsilon-greedy exploration.
+- Predict expected rewards for each movie based on user context (user embedding).
+- Apply epsilon decay to balance exploration and exploitation over time.
+- Periodically evaluate the agent's performance using Top-K ranking metrics.
+- Load data and preprocessing:
+  - Load the MovieLens 100k dataset.
+  - Preprocess user demographic features (age, gender, occupation) and movie genres.
+  - Encode user features and movie genres separately into dense embeddings via small neural networks.
+  - Use user embeddings as environment context for the bandit agent.
+  
+- Create a custom bandit environment:
+  - Context: 16-dimensional user embedding.
+  - Actions: select a movie ID (discrete).
+  - Rewards: +1.0 if user rating ≥ 4, +0.5 if rating = 3, otherwise 0.
+  - Episodes: each user receives 5 consecutive recommendations.
+ 
+- Build the agent:
+  - A simple feedforward reward network with two hidden layers (256 → 128 units) predicts reward scores.
+  - Epsilon-greedy strategy with linear epsilon decay:
+    - 0.3 → 0.1 → 0.05 → 0.01 based on training steps.
+   
+- Training:
+  - At each step, predict reward scores and sample an action.
+  - Collect feedback from the environment and update the reward network using mean squared error (MSE) loss.
+  - No experience replay is used; the agent learns online.
+ 
+- Evaluation:
+  - Every 1,000 steps, evaluate the model by predicting Top-5 movie recommendations for test users.
+  - Metrics reported: Precision@5, Recall@5, NDCG@5, MAP@5. 
+
+- Improvements applied:
+  - Reward shaping: extra reward for rating=3 to provide denser feedback.
+  - Multi-step episodes: allow each user to interact over multiple steps.
+  - Epsilon decay: gradually shift from exploration to exploitation.
+
+
 
 -----
 
