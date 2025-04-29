@@ -6,10 +6,6 @@ The objective of this project is to explore the application of RL in personalize
 
 ## Methodology
 
-## Introduction
-The objective of this project is to explore the application of RL in personalized recommendation systems. In this GitHub, we developed a custom RL environment based on the Movielens-100k dataset that simulates realistic user interactions. Building on this environment, we implemented and experiment with four different reinforcement learning algorithms, including bandits, DQN, and actor-critic methods. The performance of these models is then systematically evaluated using offline metrics, such as precision, recall, ndcg, and MAP.
-
-## Methodology
 
 ### Contextual MAB
 
