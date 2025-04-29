@@ -88,7 +88,6 @@ The objective of this project is to explore the application of RL in personalize
     - Configuration: apply a standard replay buffer with 50,000 experiences, epsilon greedy exploration with linear decay.
     - Compilation: use double DQN to avoid overestimating Q-values with Adam and mean absolute error.
   - Training, evaluations using top k ranking metrics, and improvements by modifying model structure, exploration policy, and optimizer.
-  - 
 -----
 
 ### DDPG
@@ -96,7 +95,7 @@ The objective of this project is to explore the application of RL in personalize
 **Type**: off-policy, model-free, actor-critic
 
 **Key ideas**: We performed two different experiments regarding the DDPG agent, which can be found under the folders DDPG and Actor_Critic respectively.
-- **DDPG**: We built a DDPG agent from scratch, using the actor and critic network with pretrained embeddings, reducing overestimated Q-values, and applying priorized experience replay (PER). The saved model of actor and critic are generated after training is done: `python train.py`. During evaluation, we experimented with the saved models and recommended related movies with respect to user's watch history.
+- **Approach 1: DDPG**: We built a DDPG agent from scratch, using the actor and critic network with pretrained embeddings, reducing overestimated Q-values, and applying priorized experience replay (PER). The saved model of actor and critic are generated after training is done: `python train.py`. During evaluation, we experimented with the saved models and recommended related movies with respect to user's watch history.
   - Key RL components initialization:
     - `env.py`: an offline interface to interact with users and movie recommendations.
     - `actor.py`: takes the state and outputs a continuous action, which represents user's movie preference vector.
@@ -203,6 +202,5 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
 |Contextual MAB|0.0163|0.0315|0.0237|0.0174|
 |DQN|0.0300|0.0054|0.0660|0.3000|
 |DDPG|0.0102|0.0016|0.0132|0.0451|
-|Actor Critic|0.0751|0.0202|0.0879|0.0114
+|Actor Critic (DDPG)|0.0751|0.0202|0.0879|0.0114
 |PPO|0.1839|0.1332|0.1893|0.0465|
-|..|||||
