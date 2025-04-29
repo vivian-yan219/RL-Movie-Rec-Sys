@@ -140,6 +140,6 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
 |Contextual MAB|0.0163|0.0315|0.0237|0.0174|
 |DQN|0.0300|0.0054|0.0660|0.3000|
 |DDPG|0.0102|0.0016|0.0132|0.0451|
-|Actor Critic|0.0693|0.0182|0.0759|0.0094
+|Actor Critic|0.0751|0.0202|0.0879|0.0114
 |PPO|0.1839|0.1332|0.1893|0.0465|
 |..|||||
