@@ -34,8 +34,18 @@ def main():
     if args.mode == 'train':
         train()
     else:
-        avg_reward = evaluate()
-        print(f"Average reward over {args.episodes} episodes: {avg_reward:.2f}")
+        # run evaluation and grab all the metrics
+        metrics = evaluate(
+            episodes=args.episodes,
+            max_steps=args.max_steps,
+            k=10,
+        )
+
+        print(f"Average reward over {args.episodes} episodes: {metrics['avg_reward']:.2f}")
+        print(f"Precision@10:               {metrics['precision']:.4f}")
+        print(f"Recall@10:                  {metrics['recall']:.4f}")
+        print(f"NDCG@10:                    {metrics['ndcg']:.4f}")
+        print(f"Mean Average Precision@10:  {metrics['map']:.4f}")
 
 if __name__ == '__main__':
     main()

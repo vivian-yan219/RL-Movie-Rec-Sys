@@ -20,7 +20,7 @@ def load_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     movies = pd.read_csv(os.path.join(DATA_DIR, 'movies.csv'))
     movies.to_csv(os.path.join(DATA_DIR, 'mod_movies.csv'), sep='\t', index=False)
 
-    #Loading datasets
+    # Loading datasets
     ratings_list = [i.strip().split("\t") for i in open(os.path.join(DATA_DIR,'mod_ratings.csv'), 'r').readlines()]
     ratings_df = pd.DataFrame(ratings_list[1:], columns = ['user_id', 'movie_id', 'rating', 'timestamp'])
     ratings_df['user_id'] = ratings_df['user_id'].apply(pd.to_numeric)

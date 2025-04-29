@@ -26,7 +26,7 @@ class MovieRecEnv(Env):
         users['user_id']    = users['user_id'].astype(int)
         movies['movie_id']  = movies['movie_id'].astype(int)
 
-        # — preprocess dataframes —
+        # preprocess dataframes
         self.ratings = ratings.reset_index(drop=True)
         self.users   = users.set_index('user_id')
 
@@ -39,23 +39,23 @@ class MovieRecEnv(Env):
         self.user_info = self.users.to_dict(orient='index')
         self.movies  = movies.set_index('movie_id')
 
-        # — compute means —
+        # compute means
         self.user_mean  = self.ratings.groupby('user_id')['rating'].mean().to_dict()
         self.movie_mean = self.ratings.groupby('movie_id')['rating'].mean().to_dict()
 
-        # — genre columns (all except title) —
+        # genre columns
         self.genre_cols = [c for c in self.movies.columns if c != 'title']
         self.num_genres = len(self.genre_cols)
 
-        # — occupation info —
+        # occupation info
         self.occupations = self.users['occupation'].unique().tolist()
         self.num_occ     = len(self.occupations)
 
-        # — observation dimension —
+        # observation dimension
         # [u_mean, m_mean] + genres + age_bucket(7) + occ_bucket + gender_bucket(2)
         self.obs_dim = 1 + 1 + self.num_genres + 7 + self.num_occ + 2
 
-        # — action & observation spaces —
+        # action & observation spaces
         self.movie_ids       = list(self.movies.index)
         self.action_space    = spaces.Discrete(len(self.movie_ids))
         self.observation_space = spaces.Box(
@@ -65,11 +65,11 @@ class MovieRecEnv(Env):
             dtype=np.float32
         )
 
-        # — episode control —
+        # episode control
         self.max_steps     = max_steps
         self.current_step  = 0
         self.rng           = np.random.RandomState(seed)
-        self.order         = []  # will be filled in reset()
+        self.order         = []
 
     def reset(
         self,
@@ -82,7 +82,7 @@ class MovieRecEnv(Env):
         """
         super().reset(seed=seed)
 
-        # shuffle a fresh ordering of all rating‐rows
+        # shuffle a ordering of all rating‐rows
         n = len(self.ratings)
         self.order = self.rng.permutation(n).tolist()
 
