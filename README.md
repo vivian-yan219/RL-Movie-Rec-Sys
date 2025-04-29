@@ -137,7 +137,7 @@ Each episode is a sequence of movie recommendations up to 'max_steps':
 ## Results
 ||Precision@10|Recall@10|NDCG@10|MAP@10|
 |-|-|-|-|-|
-|Bandit|||||
+|Contextual MAB|0.0163|0.0315|0.0237|0.0174|
 |DQN|0.0300|0.0054|0.0660|0.3000|
 |DDPG|0.0102|0.0016|0.0132|0.0451|
 |Actor Critic|0.0693|0.0182|0.0759|0.0094
