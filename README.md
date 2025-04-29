@@ -57,6 +57,19 @@ The objective of this project is to explore the application of RL in personalize
 
 
 
+
+ **Hyperparameters** (example)  
+    | Parameter       | Value     |
+    |-----------------|-----------|
+    | User embedding dimension  | 16    |
+    | Reward network hidden sizes | 256 → 128     |
+    | Epsilon decay schedule     | 0.3 → 0.1 → 0.05 → 0.01    |
+    | Steps per episode | 5      |
+    | Total training steps | 50,000    |
+   
+
+
+
 -----
 
 ### DQN
